@@ -46,3 +46,4 @@ Before running the script, make sure to install the required dependencies. You a
 - Ensure that you have the necessary permissions to access and modify databases.
 
 Feel free to explore the code for more details on the data extraction, transformation, and visualization processes.
+Link: https://www.linkedin.com/posts/amruthavallim_hello-linkedin-community-im-excited-to-activity-7129362736626495488-P4Ln?utm_source=share&utm_medium=member_desktop 
