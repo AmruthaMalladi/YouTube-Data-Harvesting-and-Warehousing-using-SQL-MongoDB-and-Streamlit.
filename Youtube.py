@@ -1,4 +1,4 @@
-# ==================================================       /     IMPORT LIBRARY    /      =================================================== #
+
 
 # [Youtube API libraries]
 import googleapiclient.discovery
@@ -25,7 +25,7 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 
-# ==============================================         /   /   DASHBOARD   /   /         ================================================== #
+# dashboard #
 
 # Comfiguring Streamlit GUI 
 st.set_page_config(layout='wide')
@@ -33,7 +33,7 @@ st.set_page_config(layout='wide')
 # Title
 st.title(':red[Youtube Data Harvesting]')
 
-# ========================================   /     Data collection zone and Stored data to MongoDB    /   =================================== #
+#  Data collection zone and Stored data to MongoDB #
 
 # Data collection zone
 col1, col2 = st.columns(2)
@@ -56,7 +56,7 @@ with col1:
         api_key = 'use_your_api_key'
         youtube = build(api_service_name,api_version,developerKey =api_key)
 
-        # -------------------------------------------------------------------------------------------- #
+   
 
         # Define a function to retrieve channel data
         def get_channel_data(youtube,channel_id):
@@ -106,7 +106,7 @@ with col1:
             }
         }
 
-        # -------------------------------------------------------------------------------------------- #
+       
         
         # Define a function to retrieve video IDs from channel playlist
         def get_video_ids(youtube, channel_playlist_id):
@@ -136,7 +136,7 @@ with col1:
         # Function call to Get  video_ids using channel playlist Id
         video_ids = get_video_ids(youtube, channel_playlist_id)
 
-        # -------------------------------------------------------------------------------------------- #
+        
 
         # Define a function to retrieve video data
         def get_video_data(youtube, video_ids):
@@ -252,14 +252,14 @@ with col1:
                 'Comments': comments
             }
 
-        # -------------------------------------------------------------------------------------------- #
+      
 
         #combine channel data and videos data to a dict 
         final_output = {**channel, **videos}
 
-        # -------------------------------------------------------------------------------------------- #
+    
 
-        # -----------------------------------    /   MongoDB connection and store the collected data   /    ---------------------------------- #
+        #  MongoDB connection and store the collected data  #
 
         # create a client instance of MongoDB
         client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -285,7 +285,7 @@ with col1:
         # Close the connection
         client.close()
 
-# ========================================   /     Data Migrate zone (Stored data to MySQL)    /   ========================================== #
+#  Data Migrate zone (Stored data to MySQL) #
 
 with col2:
     st.header(':violet[Data Migrate zone]')
@@ -319,7 +319,7 @@ with col2:
         result = collection.find_one({"Channel_Name": document_name})
         client.close()
 
-        # ----------------------------- Data conversion --------------------- #
+        #  Data conversion  #
 
         # Channel data json to df
         channel_details_to_sql = {
@@ -386,7 +386,7 @@ with col2:
                     Comment_details_list.append(Comment_details_tosql)
         Comments_df = pd.DataFrame(Comment_details_list)
 
-        # -------------------- Data Migrate to MySQL --------------- #
+        #  Data Migrate to MySQL #
 
         # Connect to the MySQL server
         connect = mysql.connector.connect(
@@ -449,7 +449,7 @@ with col2:
 
 
 
-# ====================================================   /     Channel Analysis zone     /   ================================================= #
+# Channel Analysis zone #
 
 st.header(':violet[Channel Data Analysis zone]')
 st.write ('''(Note:- This zone **Analysis of a collection of channel data** depends on your question selection and gives a table format output.)''')
@@ -473,7 +473,7 @@ if Check_channel:
     st.dataframe(df_at_sql)
 
 
-# -----------------------------------------------------     /   Questions   /    ------------------------------------------------------------- #
+#  Questions   #
 st.subheader(':violet[Channels Analysis ]')
 
 # Selectbox creation
@@ -604,4 +604,3 @@ elif question_tosql == '10. Which videos have the highest number of comments, an
 # SQL DB connection close
 connect_for_question.close()
 
-# ===============================================   /   COMPLETED   /   ====================================================================== #
